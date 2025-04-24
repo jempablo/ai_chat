@@ -6,7 +6,8 @@ app_email = "admin@jemapablo.com"
 app_license = "mit"
 
 # Inject JS globally to Desk UI (this enables the floating chat button across the system)
-app_include_js = "/assets/ai_chat/js/desk_chat.js"
+# app_include_js = "/assets/ai_chat/js/desk_chat.js"
+app_include_js = "/assets/ai_chat/js/chat_widget.js"
 
 # Apps
 # ------------------
