@@ -12,16 +12,14 @@ function injectChatIcon() {
             document.body.appendChild(chatIcon);
         })
         .catch(err => {
-            console.error("❌ Chat widget failed to fetch user:", err);
+            console.error("🚨 Chat widget failed to fetch user:", err);
         });
 }
 
-// If inside ERP Desk
-if (typeof frappe !== "undefined" && frappe.after_ajax) {
+if (typeof frappe !== "undefined") {
     frappe.after_ajax(() => {
         injectChatIcon();
     });
 } else {
-    // Public site (website side)
     document.addEventListener("DOMContentLoaded", injectChatIcon);
 }
