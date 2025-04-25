@@ -1,5 +1,5 @@
 function injectChatIcon(user) {
-    console.log("💬 Injecting chat icon for:", user);
+    console.log("🧠 Injecting chat icon for:", user);
     const chatIcon = document.createElement("div");
     chatIcon.id = "floating-image";
     chatIcon.innerHTML = `
@@ -9,15 +9,17 @@ function injectChatIcon(user) {
 }
 
 function fetchUserAndInject(source = "Unknown") {
-    fetch("https://ai.jempablo.com/api/user", {
-        credentials: "include",
+    fetch("/api/method/frappe.auth.get_logged_user", {
+        credentials: "include"
     })
     .then(res => {
         if (!res.ok) throw new Error("HTTP " + res.status);
         return res.json();
     })
     .then(data => {
-        injectChatIcon(data.user || "Guest");
+        const user = data.message || "Guest";
+        console.log("✅ Logged in user:", user);
+        injectChatIcon(user);
     })
     .catch(err => {
         console.error(`❌ Chat widget failed to fetch user (${source}):`, err);
