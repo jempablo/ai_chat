@@ -13,7 +13,7 @@ function injectChatIcon(user) {
 }
 
 function fetchUserAndInject(source = "Unknown") {
-    fetch("/api/method/frappe.auth.get_logged_user", {
+   fetch("/api/method/frappe.sessions.get_user", {
         credentials: "include"
     })
     .then(res => {
