@@ -14,7 +14,10 @@ function injectChatIcon(user) {
 
     // Add click event
     chatIcon.addEventListener("click", () => {
-        const chatUrl = `https://ai.jempablo.com/chat?user=${encodeURIComponent(user)}`;
+        
+        const sid = getCookie("sid");
+        const chatUrl = `https://ai.jempablo.com/chat?sid=${sid}`;
+    
         
         // 🛡️ Try setting sid in iframe to preserve session context (CORS must allow credentials)
         const iframe = document.createElement("iframe");
@@ -52,7 +55,16 @@ function fetchUserAndInject(source = "Unknown") {
     });
 }
 
+
+// Cookie reader helper
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+    
 // Detect if inside ERP Desk or outside (website)
+
 if (typeof frappe !== "undefined" && frappe.after_ajax) {
     frappe.after_ajax(() => fetchUserAndInject("ERP"));
 } else {
