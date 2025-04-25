@@ -1,3 +1,4 @@
+import frappe
 from frappe import whitelist
 
 @whitelist()
