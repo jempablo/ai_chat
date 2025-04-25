@@ -15,7 +15,20 @@ function injectChatIcon(user) {
     // Add click event
     chatIcon.addEventListener("click", () => {
         const chatUrl = `https://ai.jempablo.com/chat?user=${encodeURIComponent(user)}`;
-        window.open(chatUrl, "_blank");
+        
+        // 🛡️ Try setting sid in iframe to preserve session context (CORS must allow credentials)
+        const iframe = document.createElement("iframe");
+        iframe.src = chatUrl;
+        iframe.style.position = "fixed";
+        iframe.style.bottom = "0";
+        iframe.style.right = "0";
+        iframe.style.width = "400px";
+        iframe.style.height = "600px";
+        iframe.style.zIndex = "9999";
+        iframe.style.border = "1px solid #ccc";
+        iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms");
+        document.body.appendChild(iframe);
+    
     });
 
     document.body.appendChild(chatIcon);
