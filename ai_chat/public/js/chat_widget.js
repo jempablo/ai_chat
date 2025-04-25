@@ -1,10 +1,14 @@
 function injectChatIcon(user) {
-    console.log("🧠 Injecting chat icon for:", user);
+    console.log("💬 Injecting chat icon for:", user);
     const chatIcon = document.createElement("div");
-    chatIcon.id = "floating-image";
+    chatIcon.id = "floating-chat";
     chatIcon.innerHTML = `
-        <img src="/assets/ai_chat/images/chat_icon.png" alt="Chat Icon">
+        <img src="/assets/ai_chat/images/chat_icon.png" alt="Chat Icon" style="width:50px; height:50px; cursor:pointer;" />
     `;
+    chatIcon.style.position = "fixed";
+    chatIcon.style.bottom = "20px";
+    chatIcon.style.right = "20px";
+    chatIcon.style.zIndex = "9999";
     document.body.appendChild(chatIcon);
 }
 
@@ -22,15 +26,16 @@ function fetchUserAndInject(source = "Unknown") {
         injectChatIcon(user);
     })
     .catch(err => {
-        console.error(`❌ Chat widget failed to fetch user (${source}):`, err);
+        console.error("❌ Chat widget failed to fetch user:", err);
     });
 }
 
-// Inside ERP Desk (after_ajax is triggered once data and session are ready)
+// Detect if inside Frappe Desk (logged-in dashboard)
 if (typeof frappe !== "undefined" && frappe.after_ajax) {
-    frappe.after_ajax(() => fetchUserAndInject("ERP"));
+    frappe.after_ajax(() => {
+        fetchUserAndInject("ERP");
+    });
 } else {
-    // Outside ERP (e.g. website login page)
     document.addEventListener("DOMContentLoaded", () => {
         fetchUserAndInject("Public");
     });
