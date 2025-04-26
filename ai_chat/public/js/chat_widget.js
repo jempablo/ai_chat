@@ -13,7 +13,6 @@ function injectChatIcon(user) {
         <img src="/assets/ai_chat/images/chat_icon.png" alt="Chat Icon" style="width: 64px; height: 64px;">
     `;
 
-    // Add click event
     chatIcon.addEventListener("click", () => {
         console.log("📌 Opening chatbot iframe without sid (OAuth session managed)");
         const chatUrl = `https://ai.jempablo.com/chat`;
