@@ -1,4 +1,3 @@
-a
 function injectChatIcon(user) {
     console.log("✅ Injecting chat icon for:", user);
 
@@ -15,29 +14,15 @@ function injectChatIcon(user) {
 
     // Add click event
     chatIcon.addEventListener("click", () => {
-        console.log("📌 Opening chatbot iframe without sid (OAuth session managed)");
+        console.log("📌 Opening chatbot in new full window (OAuth)");
         const chatUrl = `https://ai.jempablo.com/chat`;
-
-        const iframe = document.createElement("iframe");
-        iframe.src = chatUrl;
-        iframe.style.position = "fixed";
-        iframe.style.bottom = "90px";
-        iframe.style.right = "20px";
-        iframe.style.width = "400px";
-        iframe.style.height = "490px";
-        iframe.style.zIndex = "9999";
-        iframe.style.border = "1px solid #ccc";
-        iframe.style.borderRadius = "8px";
-        iframe.style.background = "#fff";
-        iframe.allow = "camera; microphone";
-
-        document.body.appendChild(iframe);
+        window.open(chatUrl, "_blank", "width=900,height=700"); // ✅ NEW
     });
 
     document.body.appendChild(chatIcon);
 }
 
-// Detect if inside ERP or outside (website)
+// Detect if inside ERP or outside
 if (typeof frappe === "undefined" || !frappe?.after_ajax) {
     document.addEventListener("DOMContentLoaded", () => {
         injectChatIcon("Public");

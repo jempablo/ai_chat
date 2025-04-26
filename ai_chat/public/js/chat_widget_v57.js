@@ -1,4 +1,4 @@
-
+a
 function injectChatIcon(user) {
     console.log("✅ Injecting chat icon for:", user);
 
