@@ -13,24 +13,25 @@ function injectChatIcon(user) {
     `;
 
     chatIcon.addEventListener("click", () => {
-        console.log("🖱️ Opening chatbot for user:", user);
+        console.log("🖱️ Opening chatbot window...");
 
-        const chatUrl = `https://ai.jempablo.com/chat?user=${encodeURIComponent(user)}`;
+        // 🛠️ IMPORTANT: No ?user= parameter anymore!
+        const chatUrl = `https://ai.jempablo.com/chat`;  
         window.open(chatUrl, "_blank", "width=900,height=700");
     });
 
     document.body.appendChild(chatIcon);
 }
 
-// Dynamically inject correct ERP logged-in user
+// Dynamically inject after ERP loads
 if (typeof frappe === "undefined" || !frappe?.after_ajax) {
     document.addEventListener("DOMContentLoaded", () => {
-        injectChatIcon("Guest"); // fallback if frappe not loaded
+        injectChatIcon("Guest"); // fallback if frappe not available
     });
 } else {
     frappe.after_ajax(() => {
         if (frappe.session && frappe.session.user) {
-            injectChatIcon(frappe.session.user); // ✅ Use actual logged-in user!
+            injectChatIcon(frappe.session.user); // Correct user available
         } else {
             injectChatIcon("Guest"); // fallback
         }
